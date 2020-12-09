@@ -1,8 +1,8 @@
 import torch
 import pandas
 
-learning_rate = torch.tensor(0.00001)
-n_iter = 18900
+n = 19900
+learn_rate = torch.tensor(0.00001)
 
 A = torch.randn((1,3), requires_grad=True)
 b = torch.randn(1,requires_grad=True)
@@ -35,15 +35,15 @@ y = torch.tensor(data[0], dtype=torch.float)
 
 x = torch.stack((x1,x2,torch.ones(x1.size())),0)
 
-for _ in range(n_iter):
+for i in range(n):
     ypredicted = model(x)
     cost = loss(ypredicted, y)
     print(A," ", b ," => ", cost)
     cost.backward()
 
     with torch.no_grad():
-        A = A - learning_rate * A.grad
-        b = b - learning_rate * b.grad
+        A = A - learn_rate * A.grad
+        b = b - learn_rate * b.grad
 
     A.requires_grad_(True)
     b.requires_grad_(True)
